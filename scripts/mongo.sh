@@ -1,0 +1,1 @@
+docker run --name mongodb --network mynetwork -p "27017:27017" -d -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root mongo

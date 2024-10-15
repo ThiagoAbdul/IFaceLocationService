@@ -1,0 +1,1 @@
+docker run --network mynetwork --rm -p "9000:9000"  -e DB_URL=mongodb://root:root@mongodb:27017 iface/location-service
