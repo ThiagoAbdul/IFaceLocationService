@@ -25,23 +25,16 @@ async function saveLocation({ userId, lat, lon }){
 }
 
 async function getLastLocation(userId){
-    console.log(userId)
-    const location = await UserLocation.find({ userId: 7 }).sort("-date").limit(1).exec()
-
-    return location.shift()
+    const location = await UserLocation.findOne({ userId }).sort("-date").limit(1).exec()
+    return location
 }
 
 async function getLastLocations(userId){
-    console.log(userId)
-    const location = await UserLocation.find({ userId: 7 }).sort("-date").limit(20).exec()
+    const location = await UserLocation.find({ userId}).sort("-date").limit(20).exec()
     return location
 }
 
-async function getLastLocationsByDate(userId,  date){
-    console.log(userId)
-    const location = await UserLocation.find({ userId: 7, date: date }).sort("-date").exec()
-    return location
-}
+
 
 module.exports = {
     saveLocation, 
