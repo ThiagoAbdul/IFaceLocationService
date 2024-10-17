@@ -1,3 +1,5 @@
+const locationDTO = require("./LocationDTO")
+
 const UserLocation = require("./db").UserLocation
 
 async function getAddress(latitude, longitude){
@@ -15,7 +17,7 @@ async function saveLocation({ userId, lat, lon }){
         const now = new Date()
         const location = new UserLocation({userId, ...address, date: now})
         await location.save()
-        return location
+        return locationDTO(location)
     }
     catch(error){
         console.log(error)
@@ -26,12 +28,12 @@ async function saveLocation({ userId, lat, lon }){
 
 async function getLastLocation(userId){
     const location = await UserLocation.findOne({ userId }).sort("-date").limit(1).exec()
-    return location
+    return locationDTO(location)
 }
 
 async function getLastLocations(userId){
-    const location = await UserLocation.find({ userId}).sort("-date").limit(20).exec()
-    return location
+    const locations = await UserLocation.find({ userId}).sort("-date").limit(20).exec()
+    return locationDTO(locations)
 }
 
 
