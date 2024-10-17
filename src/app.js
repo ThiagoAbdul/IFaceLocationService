@@ -13,22 +13,37 @@ app.get('/api/health', (req, res) => {
 
 app.get('/api/user/:id/last', async (req, res) => {
     const id = req.params.id
-    const location = await locationService.getLastLocation(id)
-  res.json(location)
+    try{
+        const location = await locationService.getLastLocation(id)
+        res.json(location)
+    }
+    catch{
+        return res.status(500).send({message: "Unexpected Error"})
+    }
 })
 
 app.get('/api/user/:id', async (req, res) => {
     const id = req.params.id
-    const location = await locationService.getLastLocations(id)
-  res.json(location)
+    try{
+        const location = await locationService.getLastLocations(id)
+        res.json(location)
+    }
+    catch{
+        return res.status(500).send({message: "Unexpected Error"})
+    }
 })
 
 app.post('/api', async (req, res) => {
     const { userId, lat, lon } = req.body
     if(!userId || !lat || !lon)
         res.status(400).json({ message: "Incorrect body" })
-    const location = await locationService.saveLocation({ userId, lat, lon })
-    res.status(201).json(location)
+    try{
+        const location = await locationService.saveLocation({ userId, lat, lon })
+        res.status(201).json(location)
+    }
+    catch{
+        return res.status(500).send({message: "Unexpected Error"})
+    }
 })
   
 

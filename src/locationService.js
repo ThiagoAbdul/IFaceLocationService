@@ -1,4 +1,4 @@
-const locationDTO = require("./LocationDTO")
+const locationDTO = require("./locationDTO.js")
 
 const UserLocation = require("./db").UserLocation
 
@@ -33,7 +33,7 @@ async function getLastLocation(userId){
 
 async function getLastLocations(userId){
     const locations = await UserLocation.find({ userId}).sort("-date").limit(20).exec()
-    return locationDTO(locations)
+    return locations.map(x => locationDTO(x)).filter(x => x)
 }
 
 
